@@ -77,7 +77,7 @@ class GameViewController: UIViewController {
 
         let secondDuration: Double = 60
         let minuteDuration: Double = secondDuration * 60
-        let hourDuration: Double = minuteDuration * 60
+        let hourDuration: Double = minuteDuration * 12
 
         let zAngle: CGFloat = (2.0 * .pi) * -1
 
