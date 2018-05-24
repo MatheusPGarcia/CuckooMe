@@ -107,38 +107,6 @@ class GameViewController: UIViewController {
         cuSound.load()
     }
 
-    func startPosition() {
-
-        let fullRotation: CGFloat = (2.0 * .pi) * -1
-
-        var inicialSecond: CGFloat = fullRotation / 60
-        inicialSecond = inicialSecond * CGFloat(seconds)
-        secondPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialSecond, duration: 0))
-
-        var inicialMinute: CGFloat = fullRotation / 60
-        inicialMinute = inicialMinute * CGFloat(minutes)
-        minutePointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialMinute, duration: 0))
-
-        var inicialHour: CGFloat = fullRotation / 12
-        inicialHour = inicialHour * CGFloat(hour)
-        hourPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialHour, duration: 0))
-    }
-
-    func rotate() {
-
-        let secondDuration: Double = 60
-        let minuteDuration: Double = secondDuration * 60
-        let hourDuration: Double = minuteDuration * 12
-
-        let zAngle: CGFloat = (2.0 * .pi) * -1
-
-        hourPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle , duration: hourDuration)))
-
-        minutePointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: minuteDuration)))
-
-        secondPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: secondDuration)))
-    }
-
     func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCounting), userInfo: nil, repeats: true)
     }
@@ -164,7 +132,9 @@ class GameViewController: UIViewController {
     func updateMinutes() {
         minutes = minutes + 1
 
-        if minutes == 30 {
+        let halfHour = 30
+
+        if minutes == halfHour {
             playCuSound()
         } else if minutes == maxValue {
             minutes = 0
@@ -200,6 +170,38 @@ class GameViewController: UIViewController {
 
         let action = SCNAction.playAudio(cuSound, waitForCompletion: true)
         minutePointer.runAction(action)
+    }
+
+    func startPosition() {
+
+        let fullRotation: CGFloat = (2.0 * .pi) * -1
+
+        var inicialSecond: CGFloat = fullRotation / 60
+        inicialSecond = inicialSecond * CGFloat(seconds)
+        secondPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialSecond, duration: 0))
+
+        var inicialMinute: CGFloat = fullRotation / 60
+        inicialMinute = inicialMinute * CGFloat(minutes)
+        minutePointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialMinute, duration: 0))
+
+        var inicialHour: CGFloat = fullRotation / 12
+        inicialHour = inicialHour * CGFloat(hour)
+        hourPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialHour, duration: 0))
+    }
+
+    func rotate() {
+
+        let secondDuration: Double = 60
+        let minuteDuration: Double = secondDuration * 60
+        let hourDuration: Double = minuteDuration * 12
+
+        let zAngle: CGFloat = (2.0 * .pi) * -1
+
+        hourPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle , duration: hourDuration)))
+
+        minutePointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: minuteDuration)))
+
+        secondPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: secondDuration)))
     }
 
     override func didReceiveMemoryWarning() {
