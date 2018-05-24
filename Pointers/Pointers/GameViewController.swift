@@ -64,6 +64,17 @@ class GameViewController: UIViewController {
 
         startPosition()
         rotate()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(willEnterForeground(_:)),
+                                               name: .UIApplicationWillEnterForeground,
+                                               object: nil)
+    }
+
+    deinit {
+        // make sure to remove the observer when this view controller is dismissed/deallocated
+
+        NotificationCenter.default.removeObserver(self)
     }
 
     func setupHour() {
@@ -202,6 +213,12 @@ class GameViewController: UIViewController {
         minutePointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: minuteDuration)))
 
         secondPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: secondDuration)))
+    }
+
+    @objc func willEnterForeground(_ notification: NSNotification!) {
+
+        setupHour()
+        startPosition()
     }
 
     override func didReceiveMemoryWarning() {
