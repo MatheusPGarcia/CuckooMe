@@ -21,25 +21,57 @@ class GameViewController: UIViewController {
     var secondPointer: SCNNode!
     var textNode: SCNNode!
 
-    var seconds: Int = 0
-    var minutes: Int = 0
-    var hour: Int = 0
     let maxValue = 60
     let maxHourValue = 12
 
     var timer = Timer()
 
+    var currentTime = CurrentTime()
+
     var cucoSound: SCNAudioSource!
+    var cuSound: SCNAudioSource!
+
+    var seconds:Int = 00 {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateTime()
+            }
+        }
+    }
+    var minutes:Int = 00 {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateTime()
+            }
+        }
+    }
+    var hour:Int = 00 {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateTime()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupHour()
         setupScene()
         setupNodes()
         setupSound()
         startTimer()
 
+        startPosition()
         rotate()
+    }
+
+    func setupHour() {
+        currentTime.updateHour()
+
+        seconds = currentTime.second
+        minutes = currentTime.minute
+        hour = currentTime.hour
     }
 
     func setupScene() {
@@ -71,6 +103,25 @@ class GameViewController: UIViewController {
         cucoSound = SCNAudioSource(fileNamed: "cuco.mp3")!
         cucoSound.load()
 
+        cuSound = SCNAudioSource(fileNamed: "cu.mp3")!
+        cuSound.load()
+    }
+
+    func startPosition() {
+
+        let fullRotation: CGFloat = (2.0 * .pi) * -1
+
+        var inicialSecond: CGFloat = fullRotation / 60
+        inicialSecond = inicialSecond * CGFloat(seconds)
+        secondPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialSecond, duration: 0))
+
+        var inicialMinute: CGFloat = fullRotation / 60
+        inicialMinute = inicialMinute * CGFloat(minutes)
+        minutePointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialMinute, duration: 0))
+
+        var inicialHour: CGFloat = fullRotation / 12
+        inicialHour = inicialHour * CGFloat(hour)
+        hourPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialHour, duration: 0))
     }
 
     func rotate() {
@@ -89,10 +140,6 @@ class GameViewController: UIViewController {
     }
 
     func startTimer() {
-        seconds = 0
-        minutes = 0
-        hour = 0
-
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCounting), userInfo: nil, repeats: true)
     }
 
@@ -117,7 +164,9 @@ class GameViewController: UIViewController {
     func updateMinutes() {
         minutes = minutes + 1
 
-        if minutes == maxValue {
+        if minutes == 30 {
+            playCuSound()
+        } else if minutes == maxValue {
             minutes = 0
             updateHour()
         }
@@ -126,14 +175,20 @@ class GameViewController: UIViewController {
     func updateHour() {
         hour = hour + 1
 
-        playSound()
+        playCucoSound()
 
         if hour == maxHourValue {
             hour = 0
         }
     }
 
-    func playSound () {
+    func updateTime() {
+        if let textTimer = textNode.geometry as? SCNText {
+            textTimer.string = String(format:"%02i:%02i:%02i", hour, minutes, seconds)
+        }
+    }
+
+    func playCucoSound () {
 
         let times = hour
 
@@ -141,9 +196,14 @@ class GameViewController: UIViewController {
         hourPointer.runAction(SCNAction.repeat(action, count: times))
     }
 
+    func playCuSound () {
+
+        let action = SCNAction.playAudio(cuSound, waitForCompletion: true)
+        minutePointer.runAction(action)
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
 }
