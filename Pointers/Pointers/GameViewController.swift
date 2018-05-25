@@ -77,7 +77,6 @@ class GameViewController: UIViewController {
         startPosition()
         rotate()
         
-        locationManager.delegate = self
         let authorizationStatus: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
         
         if (authorizationStatus == CLAuthorizationStatus.notDetermined) {
@@ -200,6 +199,8 @@ class GameViewController: UIViewController {
 
     func updateHour() {
         hour = hour + 1
+        
+        updateTemperature()
 
         cucoAnimation(type: "hour")
 
@@ -221,7 +222,7 @@ class GameViewController: UIViewController {
         let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat!)&lon=\(lon!)&appid=3787fb9e071de92402fc5a80115f16c0"
         print(url)
         let json = getJSONfromURL(url: url)
-        let temperature = String(((json!!["main"] as! [String:Any])["temp"]!) as! Double - 273.15)
+        let temperature = String(Int(((json!!["main"] as! [String:Any])["temp"]!) as! Double - 273.15))
         if let temperatureText = temperatureTextNode.geometry as? SCNText {
             temperatureText.string = temperature + "˚C"
         }
@@ -381,17 +382,5 @@ class GameViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
-    }
-}
-
-extension GameViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            print("Found user's location: \(location)")
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to find user's location: \(error.localizedDescription)")
     }
 }
