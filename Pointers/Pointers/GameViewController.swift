@@ -21,6 +21,9 @@ class GameViewController: UIViewController {
     var secondPointer: SCNNode!
     var textNode: SCNNode!
 
+    var doorNode: SCNNode!
+    var perchNode: SCNNode!
+
     let maxValue = 60
     let maxHourValue = 12
 
@@ -65,6 +68,8 @@ class GameViewController: UIViewController {
         startPosition()
         rotate()
 
+        openDoor()
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willEnterForeground(_:)),
                                                name: .UIApplicationWillEnterForeground,
@@ -78,6 +83,7 @@ class GameViewController: UIViewController {
     }
 
     func setupHour() {
+
         currentTime.updateHour()
 
         seconds = currentTime.second
@@ -106,6 +112,12 @@ class GameViewController: UIViewController {
 
             let textNodeName = "text"
             textNode = scene.rootNode.childNode(withName: textNodeName, recursively: true)
+
+            let doorNodeName = "door"
+            doorNode = scene.rootNode.childNode(withName: doorNodeName, recursively: true)
+
+            let perchNodeName = "perch"
+            perchNode = scene.rootNode.childNode(withName: perchNodeName, recursively: true)
         }
     }
 
@@ -215,10 +227,24 @@ class GameViewController: UIViewController {
         secondPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: secondDuration)))
     }
 
+    func openDoor() {
+
+        let duration: Double = 1
+        let angleMult: CGFloat = 3 / 4
+        let yAngle: CGFloat = (.pi * -1) * angleMult
+
+        doorNode.runAction(SCNAction.rotateBy(x: 0, y: yAngle, z: 0, duration: duration))
+
+        let perchDuration: Double = 1.5
+        let zSpace: CGFloat = 3
+
+        perchNode.runAction(SCNAction.moveBy(x: 0, y: 0, z: zSpace, duration: perchDuration))
+    }
+
     @objc func willEnterForeground(_ notification: NSNotification!) {
 
         setupHour()
-        startPosition()
+        //TO-DO: Adjust position of the pointers
     }
 
     override func didReceiveMemoryWarning() {
