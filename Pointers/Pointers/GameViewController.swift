@@ -21,9 +21,13 @@ class GameViewController: UIViewController {
     var secondPointer: SCNNode!
     var textNode: SCNNode!
 
-    var doorNode: SCNNode!
-    var cucoNode: SCNNode!
-    var perchNode: SCNNode!
+    var leftDoorNode: SCNNode!
+    var leftCucoNode: SCNNode!
+    var leftPerchNode: SCNNode!
+
+    var rightDoorNode: SCNNode!
+    var rightCucoNode: SCNNode!
+    var rightPerchNode: SCNNode!
 
     let maxValue = 60
     let maxHourValue = 12
@@ -106,20 +110,29 @@ class GameViewController: UIViewController {
             let minuteNodeName = "minuteNode"
             minutePointer = scene.rootNode.childNode(withName: minuteNodeName, recursively: true)
 
-            let secondNodeName = "secondNode"
-            secondPointer = scene.rootNode.childNode(withName: secondNodeName, recursively: true)
+//            let secondNodeName = "secondNode"
+//            secondPointer = scene.rootNode.childNode(withName: secondNodeName, recursively: true)
 
             let textNodeName = "text"
             textNode = scene.rootNode.childNode(withName: textNodeName, recursively: true)
 
-            let doorNodeName = "door"
-            doorNode = scene.rootNode.childNode(withName: doorNodeName, recursively: true)
+            let leftDoorNodeName = "leftDoor"
+            leftDoorNode = scene.rootNode.childNode(withName: leftDoorNodeName, recursively: true)
 
-            let cucoNodeName = "cuco"
-            cucoNode = scene.rootNode.childNode(withName: cucoNodeName, recursively: true)
+            let rightDoorNodeName = "rightDoor"
+            rightDoorNode = scene.rootNode.childNode(withName: rightDoorNodeName, recursively: true)
 
-            let perchNodeName = "perch"
-            perchNode = scene.rootNode.childNode(withName: perchNodeName, recursively: true)
+            let leftCucoNodeName = "leftCuco"
+            leftCucoNode = scene.rootNode.childNode(withName: leftCucoNodeName, recursively: true)
+
+            let leftPerchNodeName = "leftPerch"
+            leftPerchNode = scene.rootNode.childNode(withName: leftPerchNodeName, recursively: true)
+
+            let rightCucoNodeName = "rightCuco"
+            rightCucoNode = scene.rootNode.childNode(withName: rightCucoNodeName, recursively: true)
+
+            let rightPerchNodeName = "rightPerch"
+            rightPerchNode = scene.rootNode.childNode(withName: rightPerchNodeName, recursively: true)
         }
     }
 
@@ -187,9 +200,9 @@ class GameViewController: UIViewController {
 
         let fullRotation: CGFloat = (2.0 * .pi) * -1
 
-        var inicialSecond: CGFloat = fullRotation / 60
-        inicialSecond = inicialSecond * CGFloat(seconds)
-        secondPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialSecond, duration: 0))
+//        var inicialSecond: CGFloat = fullRotation / 60
+//        inicialSecond = inicialSecond * CGFloat(seconds)
+//        secondPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialSecond, duration: 0))
 
         var inicialMinute: CGFloat = fullRotation / 60
         inicialMinute = inicialMinute * CGFloat(minutes)
@@ -212,7 +225,7 @@ class GameViewController: UIViewController {
 
         minutePointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: minuteDuration)))
 
-        secondPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: secondDuration)))
+//        secondPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: secondDuration)))
     }
 
     func cucoAnimation(type: String) {
@@ -221,8 +234,11 @@ class GameViewController: UIViewController {
         let angleMult: CGFloat = 3 / 4
         let yAngle: CGFloat = (.pi * -1) * angleMult
 
-        let openDoorAction = SCNAction.rotateBy(x: 0, y: yAngle, z: 0, duration: doorOpeningDuration)
-        doorNode.runAction(openDoorAction)
+        let openLeftDoorAction = SCNAction.rotateBy(x: 0, y: yAngle, z: 0, duration: doorOpeningDuration)
+        leftDoorNode.runAction(openLeftDoorAction)
+
+        let openRightDoorAction = SCNAction.rotateBy(x: 0, y: -yAngle, z: 0, duration: doorOpeningDuration)
+        rightDoorNode.runAction(openRightDoorAction)
 
         let goingOutDuration: Double = 1.5
         let zSpace: CGFloat = 3
@@ -230,8 +246,8 @@ class GameViewController: UIViewController {
         let cucoAction = SCNAction.moveBy(x: 0, y: 0, z: zSpace, duration: goingOutDuration)
         let perchAction = SCNAction.moveBy(x: 0, y: 0, z: zSpace, duration: goingOutDuration)
 
-        cucoNode.runAction(cucoAction)
-        perchNode.runAction(perchAction) {
+        leftCucoNode.runAction(cucoAction)
+        leftPerchNode.runAction(perchAction) {
 
             var timesReference = 1
             var soundReference = self.cuSound
@@ -256,13 +272,13 @@ class GameViewController: UIViewController {
             let animationsArray = [leanAction, cucoSound, unleanAction]
             let animationsSequence = SCNAction.sequence(animationsArray)
 
-            self.cucoNode.runAction(SCNAction.repeat(animationsSequence, count: times), completionHandler: {
+            self.leftCucoNode.runAction(SCNAction.repeat(animationsSequence, count: times), completionHandler: {
 
                 let uncucoAction = SCNAction.moveBy(x: 0, y: 0, z: -zSpace, duration: goingOutDuration)
                 let unperchAction = SCNAction.moveBy(x: 0, y: 0, z: -zSpace, duration: goingOutDuration)
 
-                self.cucoNode.runAction(uncucoAction)
-                self.perchNode.runAction(unperchAction)
+                self.leftCucoNode.runAction(uncucoAction)
+                self.leftPerchNode.runAction(unperchAction)
 
                 let waitAction = SCNAction.wait(duration: 0.5)
                 let closeDoorAction = SCNAction.rotateBy(x: 0, y: -yAngle, z: 0, duration: doorOpeningDuration)
@@ -270,7 +286,51 @@ class GameViewController: UIViewController {
                 let animationsSequence = [waitAction, closeDoorAction]
                 let sequence = SCNAction.sequence(animationsSequence)
 
-                self.doorNode.runAction(sequence)
+                self.leftDoorNode.runAction(sequence)
+            })
+        }
+
+        rightCucoNode.runAction(cucoAction)
+        rightPerchNode.runAction(perchAction) {
+
+            var timesReference = 1
+            var soundReference = self.cuSound
+
+            if type == "hour" {
+                timesReference = self.hour
+                soundReference = self.cucoSound
+            }
+
+            let times = timesReference
+            let sound = soundReference
+
+            let leanDuration = 0.5
+
+            let angleMult: CGFloat = 1 / 4
+            let angle: CGFloat = (.pi * -1) * angleMult
+
+            let leanAction = SCNAction.rotateBy(x: -angle, y: 0, z: 0, duration: leanDuration)
+            let cucoSound = SCNAction.playAudio(sound!, waitForCompletion: false)
+            let unleanAction = SCNAction.rotateBy(x: angle, y: 0, z: 0, duration: leanDuration)
+
+            let animationsArray = [leanAction, cucoSound, unleanAction]
+            let animationsSequence = SCNAction.sequence(animationsArray)
+
+            self.rightCucoNode.runAction(SCNAction.repeat(animationsSequence, count: times), completionHandler: {
+
+                let uncucoAction = SCNAction.moveBy(x: 0, y: 0, z: -zSpace, duration: goingOutDuration)
+                let unperchAction = SCNAction.moveBy(x: 0, y: 0, z: -zSpace, duration: goingOutDuration)
+
+                self.rightCucoNode.runAction(uncucoAction)
+                self.rightPerchNode.runAction(unperchAction)
+
+                let waitAction = SCNAction.wait(duration: 0.5)
+                let closeDoorAction = SCNAction.rotateBy(x: 0, y: yAngle, z: 0, duration: doorOpeningDuration)
+
+                let animationsSequence = [waitAction, closeDoorAction]
+                let sequence = SCNAction.sequence(animationsSequence)
+
+                self.rightDoorNode.runAction(sequence)
             })
         }
     }

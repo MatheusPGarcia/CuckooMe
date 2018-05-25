@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE269D0F20B89B7D000BEF5C /* CuckooBodyTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = AE269D0D20B89B7C000BEF5C /* CuckooBodyTexture.png */; };
+		AE269D1020B89B7D000BEF5C /* WoodTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE269D0E20B89B7D000BEF5C /* WoodTexture.jpg */; };
+		AE269D1220B8A487000BEF5C /* GoldTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE269D1120B8A487000BEF5C /* GoldTexture.jpg */; };
+		AE269D1420B8ABA7000BEF5C /* WoodPorta.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE269D1320B8ABA7000BEF5C /* WoodPorta.jpg */; };
 		AE73DB7020B5D95C0052663A /* CurrentTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE73DB6F20B5D95C0052663A /* CurrentTime.swift */; };
 		AE73DB7620B60C260052663A /* cuco.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AE73DB7420B60C250052663A /* cuco.mp3 */; };
 		AE73DB7B20B60C880052663A /* cu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AE73DB7A20B60C880052663A /* cu.mp3 */; };
@@ -17,6 +21,7 @@
 		AEB48C2420B346BE00748594 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEB48C2320B346BE00748594 /* Assets.xcassets */; };
 		AEB48C2F20B346BF00748594 /* PointersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB48C2E20B346BF00748594 /* PointersTests.swift */; };
 		AEB48C3A20B346BF00748594 /* PointersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB48C3920B346BF00748594 /* PointersUITests.swift */; };
+		AEEEE45B20B8B7E10077CBA9 /* WoodPorta2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AEEEE45A20B8B7E00077CBA9 /* WoodPorta2.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE269D0D20B89B7C000BEF5C /* CuckooBodyTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CuckooBodyTexture.png; sourceTree = "<group>"; };
+		AE269D0E20B89B7D000BEF5C /* WoodTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = WoodTexture.jpg; sourceTree = "<group>"; };
+		AE269D1120B8A487000BEF5C /* GoldTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GoldTexture.jpg; sourceTree = "<group>"; };
+		AE269D1320B8ABA7000BEF5C /* WoodPorta.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = WoodPorta.jpg; sourceTree = "<group>"; };
 		AE73DB6F20B5D95C0052663A /* CurrentTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentTime.swift; sourceTree = "<group>"; };
 		AE73DB7420B60C250052663A /* cuco.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cuco.mp3; sourceTree = "<group>"; };
 		AE73DB7A20B60C880052663A /* cu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cu.mp3; sourceTree = "<group>"; };
@@ -53,6 +62,7 @@
 		AEB48C3520B346BF00748594 /* PointersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PointersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEB48C3920B346BF00748594 /* PointersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointersUITests.swift; sourceTree = "<group>"; };
 		AEB48C3B20B346BF00748594 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AEEEE45A20B8B7E00077CBA9 /* WoodPorta2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = WoodPorta2.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +90,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE269D0C20B89B29000BEF5C /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				AE269D1120B8A487000BEF5C /* GoldTexture.jpg */,
+				AE269D0D20B89B7C000BEF5C /* CuckooBodyTexture.png */,
+				AE269D0E20B89B7D000BEF5C /* WoodTexture.jpg */,
+				AE269D1320B8ABA7000BEF5C /* WoodPorta.jpg */,
+				AEEEE45A20B8B7E00077CBA9 /* WoodPorta2.jpg */,
+			);
+			path = Textures;
+			sourceTree = "<group>";
+		};
 		AEB48C0E20B346BC00748594 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +133,7 @@
 				AE73DB6F20B5D95C0052663A /* CurrentTime.swift */,
 				AEB48C2020B346BC00748594 /* Main.storyboard */,
 				AEB48C2320B346BE00748594 /* Assets.xcassets */,
+				AE269D0C20B89B29000BEF5C /* Textures */,
 				AEB48C2520B346BE00748594 /* Info.plist */,
 			);
 			path = Pointers;
@@ -241,8 +264,13 @@
 				AE73DB7B20B60C880052663A /* cu.mp3 in Resources */,
 				AE73DB7620B60C260052663A /* cuco.mp3 in Resources */,
 				AEB48C1D20B346BC00748594 /* art.scnassets in Resources */,
+				AE269D0F20B89B7D000BEF5C /* CuckooBodyTexture.png in Resources */,
+				AEEEE45B20B8B7E10077CBA9 /* WoodPorta2.jpg in Resources */,
 				AEB48C2420B346BE00748594 /* Assets.xcassets in Resources */,
+				AE269D1220B8A487000BEF5C /* GoldTexture.jpg in Resources */,
+				AE269D1020B89B7D000BEF5C /* WoodTexture.jpg in Resources */,
 				AEB48C2220B346BC00748594 /* Main.storyboard in Resources */,
+				AE269D1420B8ABA7000BEF5C /* WoodPorta.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
