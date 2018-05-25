@@ -22,6 +22,7 @@ class GameViewController: UIViewController {
     var textNode: SCNNode!
 
     var doorNode: SCNNode!
+    var cucoNode: SCNNode!
     var perchNode: SCNNode!
 
     let maxValue = 60
@@ -67,8 +68,6 @@ class GameViewController: UIViewController {
 
         startPosition()
         rotate()
-
-        openDoor()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willEnterForeground(_:)),
@@ -116,6 +115,9 @@ class GameViewController: UIViewController {
             let doorNodeName = "door"
             doorNode = scene.rootNode.childNode(withName: doorNodeName, recursively: true)
 
+            let cucoNodeName = "cuco"
+            cucoNode = scene.rootNode.childNode(withName: cucoNodeName, recursively: true)
+
             let perchNodeName = "perch"
             perchNode = scene.rootNode.childNode(withName: perchNodeName, recursively: true)
         }
@@ -158,7 +160,7 @@ class GameViewController: UIViewController {
         let halfHour = 30
 
         if minutes == halfHour {
-            playCuSound()
+            cucoAnimation(type: "minute")
         } else if minutes == maxValue {
             minutes = 0
             updateHour()
@@ -168,7 +170,7 @@ class GameViewController: UIViewController {
     func updateHour() {
         hour = hour + 1
 
-        playCucoSound()
+        cucoAnimation(type: "hour")
 
         if hour == maxHourValue {
             hour = 0
@@ -179,20 +181,6 @@ class GameViewController: UIViewController {
         if let textTimer = textNode.geometry as? SCNText {
             textTimer.string = String(format:"%02i:%02i:%02i", hour, minutes, seconds)
         }
-    }
-
-    func playCucoSound () {
-
-        let times = hour
-
-        let action = SCNAction.playAudio(cucoSound, waitForCompletion: true)
-        hourPointer.runAction(SCNAction.repeat(action, count: times))
-    }
-
-    func playCuSound () {
-
-        let action = SCNAction.playAudio(cuSound, waitForCompletion: true)
-        minutePointer.runAction(action)
     }
 
     func startPosition() {
@@ -227,18 +215,64 @@ class GameViewController: UIViewController {
         secondPointer.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: zAngle, duration: secondDuration)))
     }
 
-    func openDoor() {
+    func cucoAnimation(type: String) {
 
-        let duration: Double = 1
+        let doorOpeningDuration: Double = 1
         let angleMult: CGFloat = 3 / 4
         let yAngle: CGFloat = (.pi * -1) * angleMult
 
-        doorNode.runAction(SCNAction.rotateBy(x: 0, y: yAngle, z: 0, duration: duration))
+        let openDoorAction = SCNAction.rotateBy(x: 0, y: yAngle, z: 0, duration: doorOpeningDuration)
+        doorNode.runAction(openDoorAction)
 
-        let perchDuration: Double = 1.5
+        let goingOutDuration: Double = 1.5
         let zSpace: CGFloat = 3
 
-        perchNode.runAction(SCNAction.moveBy(x: 0, y: 0, z: zSpace, duration: perchDuration))
+        let cucoAction = SCNAction.moveBy(x: 0, y: 0, z: zSpace, duration: goingOutDuration)
+        let perchAction = SCNAction.moveBy(x: 0, y: 0, z: zSpace, duration: goingOutDuration)
+
+        cucoNode.runAction(cucoAction)
+        perchNode.runAction(perchAction) {
+
+            var timesReference = 1
+            var soundReference = self.cuSound
+
+            if type == "hour" {
+                timesReference = self.hour
+                soundReference = self.cucoSound
+            }
+
+            let times = timesReference
+            let sound = soundReference
+
+            let leanDuration = 0.5
+
+            let angleMult: CGFloat = 1 / 4
+            let angle: CGFloat = (.pi * -1) * angleMult
+
+            let leanAction = SCNAction.rotateBy(x: -angle, y: 0, z: 0, duration: leanDuration)
+            let cucoSound = SCNAction.playAudio(sound!, waitForCompletion: false)
+            let unleanAction = SCNAction.rotateBy(x: angle, y: 0, z: 0, duration: leanDuration)
+
+            let animationsArray = [leanAction, cucoSound, unleanAction]
+            let animationsSequence = SCNAction.sequence(animationsArray)
+
+            self.cucoNode.runAction(SCNAction.repeat(animationsSequence, count: times), completionHandler: {
+
+                let uncucoAction = SCNAction.moveBy(x: 0, y: 0, z: -zSpace, duration: goingOutDuration)
+                let unperchAction = SCNAction.moveBy(x: 0, y: 0, z: -zSpace, duration: goingOutDuration)
+
+                self.cucoNode.runAction(uncucoAction)
+                self.perchNode.runAction(unperchAction)
+
+                let waitAction = SCNAction.wait(duration: 0.5)
+                let closeDoorAction = SCNAction.rotateBy(x: 0, y: -yAngle, z: 0, duration: doorOpeningDuration)
+
+                let animationsSequence = [waitAction, closeDoorAction]
+                let sequence = SCNAction.sequence(animationsSequence)
+
+                self.doorNode.runAction(sequence)
+            })
+        }
     }
 
     @objc func willEnterForeground(_ notification: NSNotification!) {
