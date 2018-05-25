@@ -26,6 +26,10 @@
 	<array>
 		<string>arm64</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Sua localização será usada para mostrar dados precisos sobre o clima</string>
+	<key>CFBundleDisplayName</key>
+	<string>CuckooTV</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
 </dict>

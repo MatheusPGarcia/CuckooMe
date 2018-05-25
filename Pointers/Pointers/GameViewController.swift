@@ -10,6 +10,7 @@ import UIKit
 import QuartzCore
 import SceneKit
 import AVFoundation
+import CoreLocation
 
 class GameViewController: UIViewController {
 
@@ -20,6 +21,7 @@ class GameViewController: UIViewController {
     var minutePointer: SCNNode!
     var secondPointer: SCNNode!
     var textNode: SCNNode!
+    var temperatureTextNode: SCNNode!
 
     var doorNode: SCNNode!
     var cucoNode: SCNNode!
@@ -56,6 +58,8 @@ class GameViewController: UIViewController {
             }
         }
     }
+    
+    let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +72,17 @@ class GameViewController: UIViewController {
 
         startPosition()
         rotate()
+        
+        locationManager.delegate = self
+        let authorizationStatus: CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        
+        if (authorizationStatus == CLAuthorizationStatus.notDetermined) {
+            self.locationManager.requestWhenInUseAuthorization()
+        }
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestLocation()
+        updateTemperature()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willEnterForeground(_:)),
@@ -112,6 +127,9 @@ class GameViewController: UIViewController {
             let textNodeName = "text"
             textNode = scene.rootNode.childNode(withName: textNodeName, recursively: true)
 
+            let temperatureTextNodeName = "temperatureText"
+            temperatureTextNode = scene.rootNode.childNode(withName: temperatureTextNodeName, recursively: true)
+            
             let doorNodeName = "door"
             doorNode = scene.rootNode.childNode(withName: doorNodeName, recursively: true)
 
@@ -181,6 +199,25 @@ class GameViewController: UIViewController {
         if let textTimer = textNode.geometry as? SCNText {
             textTimer.string = String(format:"%02i:%02i:%02i", hour, minutes, seconds)
         }
+    }
+    
+    func updateTemperature() {
+        let lat = locationManager.location?.coordinate.latitude
+        let lon = locationManager.location?.coordinate.longitude
+        
+        let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat!)&lon=\(lon!)&appid=3787fb9e071de92402fc5a80115f16c0"
+        print(url)
+        let json = getJSONfromURL(url: url)
+        let temperature = String(((json!!["main"] as! [String:Any])["temp"]!) as! Double - 273.15)
+        if let temperatureText = temperatureTextNode.geometry as? SCNText {
+            temperatureText.string = temperature + "˚C"
+        }
+    }
+    
+    func getJSONfromURL(url:String) -> [String: Any]?? {
+        let data: Data = try! Data(contentsOf: URL(string: url)!)
+        let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        return json
     }
 
     func startPosition() {
@@ -284,5 +321,17 @@ class GameViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
+    }
+}
+
+extension GameViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print("Found user's location: \(location)")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
     }
 }
