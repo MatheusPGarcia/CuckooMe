@@ -30,8 +30,8 @@ class CurrentTime: NSObject {
         let calendar = Calendar.current
 
         hour = calendar.component(.hour, from: date)
-        hour = 10//hour % 12
-        minute = 59//calendar.component(.minute, from: date)
-        second = 45//calendar.component(.second, from: date)
+        hour = hour % 12
+        minute = calendar.component(.minute, from: date)
+        second = calendar.component(.second, from: date)
     }
 }

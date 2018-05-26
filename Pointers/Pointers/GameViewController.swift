@@ -86,7 +86,6 @@ class GameViewController: UIViewController {
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestLocation()
-        updateTemperature()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willEnterForeground(_:)),
@@ -367,7 +366,7 @@ class GameViewController: UIViewController {
                 let sequence = SCNAction.sequence(animationsSequence)
 
                 self.rightDoorNode.runAction(sequence, completionHandler: {
-                    self.updateTemperature()
+                    self.locationManager.requestLocation()
                 })
             })
         }
@@ -388,8 +387,10 @@ class GameViewController: UIViewController {
 
 extension GameViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        updateTemperature()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("n achou")
     }
 }
