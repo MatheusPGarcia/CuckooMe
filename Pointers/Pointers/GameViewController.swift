@@ -241,11 +241,11 @@ class GameViewController: UIViewController {
 //        secondPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialSecond, duration: 0))
 
         var inicialMinute: CGFloat = fullRotation / 60
-        inicialMinute = inicialMinute * CGFloat(minutes)
+        inicialMinute = inicialMinute * (CGFloat(minutes) + CGFloat(seconds)/60.0)
         minutePointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialMinute, duration: 0))
 
         var inicialHour: CGFloat = fullRotation / 12
-        inicialHour = inicialHour * CGFloat(hour)
+        inicialHour = inicialHour * (CGFloat(hour) + CGFloat(minutes)/60.0)
         hourPointer.runAction(SCNAction.rotateBy(x: 0, y: 0, z: inicialHour, duration: 0))
     }
 

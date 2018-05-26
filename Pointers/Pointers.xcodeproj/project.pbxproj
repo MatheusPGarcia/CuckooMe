@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22268A1E20B8E62E00727BAE /* CuckooHeadTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 22268A1D20B8E62D00727BAE /* CuckooHeadTexture.png */; };
 		AE269D0F20B89B7D000BEF5C /* CuckooBodyTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = AE269D0D20B89B7C000BEF5C /* CuckooBodyTexture.png */; };
 		AE269D1020B89B7D000BEF5C /* WoodTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE269D0E20B89B7D000BEF5C /* WoodTexture.jpg */; };
 		AE269D1220B8A487000BEF5C /* GoldTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE269D1120B8A487000BEF5C /* GoldTexture.jpg */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22268A1D20B8E62D00727BAE /* CuckooHeadTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CuckooHeadTexture.png; sourceTree = "<group>"; };
 		AE269D0D20B89B7C000BEF5C /* CuckooBodyTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CuckooBodyTexture.png; sourceTree = "<group>"; };
 		AE269D0E20B89B7D000BEF5C /* WoodTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = WoodTexture.jpg; sourceTree = "<group>"; };
 		AE269D1120B8A487000BEF5C /* GoldTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GoldTexture.jpg; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				AE269D1120B8A487000BEF5C /* GoldTexture.jpg */,
 				AE269D0D20B89B7C000BEF5C /* CuckooBodyTexture.png */,
+				22268A1D20B8E62D00727BAE /* CuckooHeadTexture.png */,
 				AE269D0E20B89B7D000BEF5C /* WoodTexture.jpg */,
 				AE269D1320B8ABA7000BEF5C /* WoodPorta.jpg */,
 				AEEEE45A20B8B7E00077CBA9 /* WoodPorta2.jpg */,
@@ -263,6 +266,7 @@
 			files = (
 				AE73DB7B20B60C880052663A /* cu.mp3 in Resources */,
 				AE73DB7620B60C260052663A /* cuco.mp3 in Resources */,
+				22268A1E20B8E62E00727BAE /* CuckooHeadTexture.png in Resources */,
 				AEB48C1D20B346BC00748594 /* art.scnassets in Resources */,
 				AE269D0F20B89B7D000BEF5C /* CuckooBodyTexture.png in Resources */,
 				AEEEE45B20B8B7E10077CBA9 /* WoodPorta2.jpg in Resources */,
