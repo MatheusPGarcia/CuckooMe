@@ -16,9 +16,11 @@ the app was developed for Apple Tv.
  - Portfolio:
  - email:
  
+ 
  - Matheus Pompeo Garcia (iOS Developer)
  - Github: MatheusPGarcia
  - email: matheuspgarcia@gmail.com
+ 
  
  - Mauricio Lorenzetti (iOS Developer)
  - Github:
