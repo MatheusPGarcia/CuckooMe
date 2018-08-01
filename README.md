@@ -12,16 +12,16 @@ Cuckoo Me is a one week project made for three iOS enthusiasts to learn some new
 the app was developed for Apple Tv.
 
 ## Members
- - Lucas Tarsitani Reis (Designer)
+ **Lucas Tarsitani Reis (Designer)**
  - Portfolio:
  - email:
- 
- 
- - Matheus Pompeo Garcia (iOS Developer)
+  
+  
+ **Matheus Pompeo Garcia (iOS Developer)**
  - Github: MatheusPGarcia
  - email: matheuspgarcia@gmail.com
- 
- 
- - Mauricio Lorenzetti (iOS Developer)
+  
+  
+ **Mauricio Lorenzetti (iOS Developer)**
  - Github:
  - email:
